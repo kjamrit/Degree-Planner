@@ -8,7 +8,7 @@ def mainmenu():
     headerBanner()
     print("What would you like to do today?")
     print("[1] View all available courses")
-    print("[2] Add/Select courses")
+    print("[2] Add/Remove courses")
     print("[3] View selected courses and total units taken ")
     print("[4] Add Notes to Courses")
     print("[5] Read Notes of Courses")
@@ -18,23 +18,9 @@ def mainmenu():
     print("[0] Quit ")
     mainCategory = input("\nEnter your option number ---->")
     if mainCategory == "1":
-        AddedCourses.ViewAvailblCourses()
+        SelectingCourses.ViewAvailblCourses()
     elif mainCategory == "2":
-        tabletShop()
-    elif mainCategory == "3":
-        laptopShop()
-    elif mainCategory == "4":
-        watchShop()
-    elif mainCategory == "5":
-        tvShop()
-    elif mainCategory == "6":
-        headphoneShop()
-    elif mainCategory == "7":
-        CheckOutCart()
-    elif mainCategory == "8":
-        headerBanner()
-        Rating = input("Enter your review or complain here: ")
-        input("Press any key to continue...")
+        editcourses()
     elif mainCategory == "0":
         exit()
 
@@ -50,17 +36,17 @@ class Courses:
         return 'Course Code-->{}     CourseName-->{}     Units-->{}'.format(self.Name, self.Description, self.Units)
 
 
-course_1 = Courses('BIO F110 ', 'BIOLOGY LABORATORY', 1)
-course_2 = Courses('BITS F110', 'ENGINEERING GRAPHICS', 2)
-course_3 = Courses('BITS F111', 'THERMODYNAMICS', 3)
-course_4 = Courses('CHEM F110', 'CHEMISTRY LAB', 1)
-course_5 = Courses('CHEM F111', 'GEN CHEM  ', 3)
-course_6 = Courses('EEE F111 ', 'ELECTRICAL SCIENCES', 3)
-course_7 = Courses('MATH F111', 'MATHEMATICS', 3)
-course_8 = Courses('PHY F110 ', 'PHY LAB',  1)
-course_9 = Courses('PHY F111 ', 'MEOW', 3)
+course_1 = Courses('BIOF110', 'BIOLOGY LABORATORY', 1)
+course_2 = Courses('BITSF110', 'ENGINEERING GRAPHICS', 2)
+course_3 = Courses('BITSF111', 'THERMODYNAMICS', 3)
+course_4 = Courses('CHEMF110', 'CHEMISTRY LAB', 1)
+course_5 = Courses('CHEMF111', 'GEN CHEM  ', 3)
+course_6 = Courses('EEEF111', 'ELECTRICAL SCIENCES', 3)
+course_7 = Courses('MATHF111', 'MATHEMATICS', 3)
+course_8 = Courses('PHYF110', 'PHY LAB',  1)
+course_9 = Courses('PHYF111', 'MEOW', 3)
 
-class AddedCourses(Courses):
+class SelectingCourses(Courses):
 
     @staticmethod
     def ViewAvailblCourses():
@@ -68,10 +54,50 @@ class AddedCourses(Courses):
         print("===========\n")
         print(*Courses.instances,sep="\n")
 
-    def AddCourses(self,):
+def editcourses(AddedCourses=None):
+    x=1
+    while x==1:
+        if AddedCourses is None:
+            AddedCourses = []
+            print("No course added!")
+        else:
+            print("Your added courses are:")
+            AddedCourses = AddedCourses
+
+        print(*AddedCourses,sep="\n")
+
+        ask=input("Would you like to [A]dd courses or [R]emove courses? Press any other key to go back to mainmenu :-").upper()
+        if ask=='A':
+            course = input("Enter course code to add:-").upper()
+            for I in Courses.instances:
+                if course in I and I not in AddedCourses:
+                    AddedCourses.append(I)
+        if ask=='R':
+            course = input("Enter course code to remove:-").upper()
+            for J in AddedCourses:
+                if course in J:
+                    AddedCourses.remove(J)
+
+        else:
+            mainmenu()
+
+def viewaddedcourses:
+    print(*AddedCourses)
 
 
 
+
+
+# def AddCourse():
+#     course=input("Enter course:-")
+#     if course not in AddedCourses:
+#         AddedCourses.append(course)
+
+
+
+# def RemoveCourse(course):
+#     if course in AddedCourses:
+#         AddedCourses.remove(course)
 
 headerBanner()
 mainmenu()
