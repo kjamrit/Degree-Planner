@@ -1,15 +1,13 @@
 def headerBanner():
-    print("\n" * 5)
     print("\nWelcome to Course Planner")
     print("==========================\n")
-
 
 def mainmenu():
     headerBanner()
     print("What would you like to do today?")
     print("[1] View all available courses")
-    print("[2] Enroll/Remove my courses")
-    print("[3] View selected courses and total units taken ")
+    print("[2] Enroll in/Remove my courses")
+    print("[3] View selected courses and Total Units Taken ")
     print("[4] Add Notes to Courses")
     print("[5] Read Notes of Courses")
     print("[6] Update Notes of Courses")
@@ -18,16 +16,31 @@ def mainmenu():
     print("[0] Quit ")
     mainCategory = input("\nEnter your option number ---->")
     if mainCategory == "1":
-        Courses.ViewAvailblCourses()
+        Courses.viewavailblcourses()
     elif mainCategory == "2":
         Courses.editcourses()
     elif mainCategory == "3":
         Courses.viewenrolledcourses()
     elif mainCategory == "4":
-        addnotes()
+        Courses.addnotes()
+    elif mainCategory == "5":
+        Courses.readnotes()
+    elif mainCategory == "6":
+        Courses.updatenotes()
+    elif mainCategory == "7":
+        Courses.deletenotes()
     elif mainCategory == "0":
         exit()
+    else:
+        wronginput()
+
+def wronginput():
+    print("Enter Valid Input")
+    i = input("Press enter to go back to Main Menu")
+    mainmenu()
+
 allcourses={}
+AddedCourses = []
 
 class Courses:
     instances = []
@@ -45,7 +58,7 @@ class Courses:
         return 'Course Code-->{}     CourseName-->{}     Units-->{}'.format(self.Name, self.Description, self.Units)
 
     @staticmethod
-    def ViewAvailblCourses():
+    def viewavailblcourses():
         print("The Available Courses are:")
         print("===========\n")
         print(*Courses.instances,sep="\n")
@@ -74,7 +87,6 @@ class Courses:
         else:
             mainmenu()
 
-
     @staticmethod
     def viewenrolledcourses():
         print("Your Enrolled Courses are:")
@@ -88,9 +100,59 @@ class Courses:
         i = input("Press enter to go back to Main Menu")
         mainmenu()
 
+    @staticmethod
+    def addnotes():
+        print(*AddedCourses, sep="\n")
+        print("===========\n")
+        coursecode = input("Enter course code you want to enter notes for:  ").upper()
+        for I in AddedCourses:
+            if coursecode == I[0]:
+                note=input("Enter the notes and gmeet links for this course--->")
+                X={"Notes": [note]}
+                I.append(X)
+                print("Succesfully added")
+            else:
+                print("Add Courses first")
 
+        print(*AddedCourses, sep="\n")
+        i = input("Press enter to go back to Main Menu")
+        mainmenu()
 
-AddedCourses = []
+    @staticmethod
+    def readnotes():
+        coursecode = input("Enter course code you want to read notes of:  ").upper()
+        for I in AddedCourses:
+            if coursecode == I[0] and len(I)>=4:
+                print(I[3])
+            else:
+                print("Add Courses first")
+        i = input("Press enter to go back to Main Menu")
+        mainmenu()
+
+    @staticmethod
+    def updatenotes():
+        coursecode = input("Enter course code you want to update notes of:  ").upper()
+        for I in AddedCourses:
+            if coursecode == I[0] and len(I)>=4:
+                updatenote = input("Enter what you'd like to add--->")
+                I[3]["Notes"].append(updatenote)
+                print("Notes Updated")
+            else:
+                print("Add Courses first")
+        i = input("Press enter to go back to Main Menu")
+        mainmenu()
+
+    @staticmethod
+    def deletenotes():
+        coursecode = input("Enter course code you want to DELETE notes of:  ").upper()
+        for I in AddedCourses:
+            if coursecode == I[0] and len(I)>=4:
+                I.remove(I[3])
+                print("Notes deleted")
+            else:
+                print("Add Courses first")
+        i = input("Press enter to go back to Main Menu")
+        mainmenu()
 
 course_1 = Courses('BIOF110', 'BIOLOGY LABORATORY', 1)
 course_2 = Courses('BITSF110', 'ENGINEERING GRAPHICS', 2)
@@ -102,21 +164,4 @@ course_7 = Courses('MATHF111', 'MATHEMATICS', 3)
 course_8 = Courses('PHYF110', 'PHY LAB',  1)
 course_9 = Courses('PHYF111', 'MEOW', 3)
 
-# def addnotes():
-#     print(*AddedCourses, sep="\n")
-#     ccode = input("Enter course code you want to enter notes for:  ").upper()
-#     for I in AddedCourses:
-#         if ccode in I:
-#             note=input("Enter the notes and gmeet links")
-#             I = f''
-#             print(I)
-#             print("Succesfully added")
-#
-#     print(*AddedCourses, sep="\n")
-
-#
-headerBanner()
 mainmenu()
-# print(allcourses)
-# print(allcourses.values())
-
